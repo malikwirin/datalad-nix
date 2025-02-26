@@ -28,8 +28,11 @@ python3.pkgs.buildPythonApplication rec {
     git
   ];
 
-  propagatedBuildInputs = [
+  buildInputs = [
     datalad
+  ];
+
+  propagatedBuildInputs = [
     python3.pkgs.requests
   ];
 
