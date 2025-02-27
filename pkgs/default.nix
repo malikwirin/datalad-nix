@@ -10,7 +10,7 @@ in rec {
     datalad = default;
   };
 
-  with-extensions = import ./with-extensions {
+  full = import ./full {
     inherit lib;
     datalad = default;
     extensions = [ container ];
