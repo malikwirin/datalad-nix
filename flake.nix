@@ -14,8 +14,15 @@
         datalad = final: prev: 
           let 
             packages = import ./pkgs/default.nix { 
-              pkgs = final; 
-              lib = final.lib;
+              pkgs = final;
+              # Adding the maintainer is no longer needed in next release of nixpkgs
+              lib = prev.lib // {
+                maintainers = prev.lib.maintainers // {
+                  malik = {
+                    name = "Malik";
+                  };
+                };
+              };
             };
           in {
             datalad-container = packages.container;
