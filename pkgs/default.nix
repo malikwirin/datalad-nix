@@ -2,7 +2,8 @@
 
 let
   inherit (pkgs) fetchFromGitHub git python3;
-in rec {
+in
+rec {
   default = pkgs.datalad;
 
   container = import ./container {
