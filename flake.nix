@@ -1,5 +1,5 @@
 {
-  description = "Flake utils demo";
+  description = "Datalad-Nix";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
