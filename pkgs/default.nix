@@ -30,6 +30,8 @@ rec {
   full = import ./full {
     inherit lib;
     datalad = default;
+    dataladGit = dataladGit;
     extensions = [ container.default ];
+    extensionsGit = [ container.gitVersion ];
   };
 }

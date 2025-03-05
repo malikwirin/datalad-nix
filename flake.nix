@@ -45,8 +45,9 @@
           in
           {
             datalad-container = packages.container;
-            dataladFull = packages.full;
+            dataladFull = packages.full.default;
             dataladGit = packages.dataladGit;
+            dataladGitFull = packages.full.gitVersion;
           };
       };
     } // flake-utils.lib.eachDefaultSystem (system:
