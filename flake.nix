@@ -9,9 +9,14 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    datalad = {
+      url = "github:datalad/datalad";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, treefmt-nix }:
+  outputs = { self, nixpkgs, flake-utils, treefmt-nix, datalad }:
     {
       overlays = rec {
         default = datalad;
@@ -28,11 +33,13 @@
                   };
                 };
               };
+              dataladSrc = datalad;
             };
           in
           {
             datalad-container = packages.container;
             dataladFull = packages.full;
+            dataladGit = packages.dataladGit;
           };
       };
     } // flake-utils.lib.eachDefaultSystem (system:
@@ -45,6 +52,7 @@
       {
         packages = import ./pkgs/default.nix {
           inherit pkgs lib;
+          dataladSrc = datalad;
         };
 
         formatter = treefmt.config.build.wrapper;

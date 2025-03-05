@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "datalad": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1734221018,
+        "narHash": "sha256-XwzYlSP2MbEb0U3tuVOq3NNqLTS08UzSfSFBidHbpAY=",
+        "owner": "datalad",
+        "repo": "datalad",
+        "rev": "4c551df6099361b1ca2ec9f3eabf9150c7f89ae0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "datalad",
+        "repo": "datalad",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -20,11 +36,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1740547748,
-        "narHash": "sha256-Ly2fBL1LscV+KyCqPRufUBuiw+zmWrlJzpWOWbahplg=",
+        "lastModified": 1741037377,
+        "narHash": "sha256-SvtvVKHaUX4Owb+PasySwZsoc5VUeTf1px34BByiOxw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3a05eebede89661660945da1f151959900903b6a",
+        "rev": "02032da4af073d0f6110540c8677f16d4be0117f",
         "type": "github"
       },
       "original": {
@@ -36,6 +52,7 @@
     },
     "root": {
       "inputs": {
+        "datalad": "datalad",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix"
