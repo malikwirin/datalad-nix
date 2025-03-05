@@ -1,4 +1,4 @@
-{ buildPythonApplication 
+{ buildPythonApplication
 , lib
 , version
 , src

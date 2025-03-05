@@ -15,7 +15,8 @@ let
     wheel = python3.pkgs.wheel;
     requests = python3.pkgs.requests;
   };
-in rec {
+in
+rec {
   default = latest;
 
   latest =
