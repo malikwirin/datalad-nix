@@ -14,9 +14,14 @@
       url = "github:datalad/datalad";
       flake = false;
     };
+
+    datalad-container = {
+      url = "github:datalad/datalad-container";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, treefmt-nix, datalad }:
+  outputs = { self, nixpkgs, flake-utils, treefmt-nix, datalad, datalad-container }:
     {
       overlays = rec {
         default = datalad;
@@ -33,7 +38,9 @@
                   };
                 };
               };
-              dataladSrc = datalad;
+              sources = {
+                inherit datalad datalad-container;
+              };
             };
           in
           {
@@ -52,7 +59,10 @@
       {
         packages = import ./pkgs/default.nix {
           inherit pkgs lib;
-          dataladSrc = datalad;
+          sources = [
+            datalad
+            datalad-container
+          ];
         };
 
         formatter = treefmt.config.build.wrapper;

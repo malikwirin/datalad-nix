@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "datalad-container": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1726502556,
+        "narHash": "sha256-Q7OftjjU2qUuZ9j7008b6DJEoZnOyZlvLbWamqes5Y8=",
+        "owner": "datalad",
+        "repo": "datalad-container",
+        "rev": "55309f8203ffd124668370deedd187b7a6420bdb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "datalad",
+        "repo": "datalad-container",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -53,6 +69,7 @@
     "root": {
       "inputs": {
         "datalad": "datalad",
+        "datalad-container": "datalad-container",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix"

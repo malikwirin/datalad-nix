@@ -1,4 +1,4 @@
-{ pkgs, lib, dataladSrc }:
+{ pkgs, lib, sources }:
 
 let
   inherit (pkgs) fetchFromGitHub git python3;
@@ -9,7 +9,7 @@ rec {
   dataladGit = default.overrideAttrs (oldAttrs: {
     version = "git";
 
-    src = dataladSrc;
+    src = sources.datalad;
 
     meta = oldAttrs.meta // {
       homepage = "https://github.com/datalad/datalad";
@@ -17,17 +17,19 @@ rec {
         with lib.maintainers; [ malik ] ++
           (oldAttrs.meta.maintainers or [ ])
       );
+      changelog = "";
     };
   });
 
   container = import ./container {
-    inherit lib fetchFromGitHub python3 git;
+    inherit fetchFromGitHub lib python3 git dataladGit;
     datalad = default;
+    containerSrc = sources.datalad-container;
   };
 
   full = import ./full {
     inherit lib;
     datalad = default;
-    extensions = [ container ];
+    extensions = [ container.default ];
   };
 }
