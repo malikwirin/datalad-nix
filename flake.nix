@@ -59,10 +59,9 @@
       {
         packages = import ./pkgs/default.nix {
           inherit pkgs lib;
-          sources = [
-            datalad
-            datalad-container
-          ];
+          sources = {
+            inherit datalad datalad-container;
+          };
         };
 
         formatter = treefmt.config.build.wrapper;

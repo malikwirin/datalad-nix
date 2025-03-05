@@ -7,13 +7,14 @@ let
     rev = version;
     hash = hash;
   };
-  base = version: src: datalad: changelog: import ./base.nix {
-    inherit version src datalad changelog lib git;
+  base = version: src: dlImpl: changelog: import ./base.nix {
+    inherit version src changelog lib git;
     buildPythonApplication = python3.pkgs.buildPythonApplication;
     setuptools = python3.pkgs.setuptools;
     tomli = python3.pkgs.tomli;
     wheel = python3.pkgs.wheel;
     requests = python3.pkgs.requests;
+    datalad = dlImpl;
   };
 in
 rec {
