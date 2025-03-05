@@ -27,11 +27,16 @@ rec {
     containerSrc = sources.datalad-container;
   };
 
-  full = import ./full {
+  with-extensions = import ./with-extensions {
     inherit lib;
     datalad = default;
     dataladGit = dataladGit;
     extensions = [ container.default ];
     extensionsGit = [ container.gitVersion ];
+  };
+
+  full = {
+    default = with-extensions.default;
+    gitVersion = with-extensions.gitVersion;
   };
 }
