@@ -20,7 +20,9 @@ in
 rec {
   default = latest;
 
-  latest =
+  latest = v1_2_5;
+
+  v1_2_5 =
     let
       version = "1.2.5";
       hash = "sha256-ueqVyCSnEkJBb21X+EM2OC6fJ1/t0YXcaES0CT4/npI=";
