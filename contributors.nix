@@ -1,5 +1,6 @@
 { nixMaintainers }:
 
 {
-  malik = nixMaintainers.malik;
+  inherit (nixMaintainers) 
+    malik;
 }
