@@ -1,0 +1,5 @@
+{ nixMaintainers }:
+
+{
+  malik = nixMaintainers.malik;
+}

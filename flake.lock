@@ -50,7 +50,7 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
+    "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1741037377,
         "narHash": "sha256-SvtvVKHaUX4Owb+PasySwZsoc5VUeTf1px34BByiOxw=",
@@ -71,7 +71,7 @@
         "datalad": "datalad",
         "datalad-container": "datalad-container",
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "treefmt-nix": "treefmt-nix"
       }
     },
@@ -93,7 +93,7 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {

@@ -2,12 +2,12 @@
   description = "Datalad-Nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     datalad = {
@@ -21,7 +21,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, treefmt-nix, datalad, datalad-container }:
+  outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container }:
+  let
+    contributors = import ./contributors.nix {
+      nixMaintainers = nixpkgs-unstable.lib.maintainers;
+    };
+  in
     {
       overlays = rec {
         default = datalad;
@@ -32,11 +37,7 @@
               pkgs = final;
               # Adding the maintainer is no longer needed in next release of nixpkgs
               lib = prev.lib // {
-                maintainers = prev.lib.maintainers // {
-                  malik = {
-                    name = "Malik";
-                  };
-                };
+                maintainers = prev.lib.maintainers // contributors;
               };
               sources = {
                 inherit datalad datalad-container;
@@ -52,7 +53,7 @@
       };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = nixpkgs-unstable.legacyPackages.${system};
         lib = pkgs.lib;
 
         treefmt = treefmt-nix.lib.evalModule pkgs (import ./treefmt.nix);
