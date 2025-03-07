@@ -60,10 +60,11 @@
       in
       {
         packages = import ./pkgs/default.nix {
-          inherit pkgs lib;
+          inherit pkgs lib contributors;
           sources = {
             inherit datalad datalad-container;
           };
+          flake = import ./flake.nix;
         };
 
         formatter = treefmt.config.build.wrapper;
