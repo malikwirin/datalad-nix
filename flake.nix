@@ -22,11 +22,11 @@
   };
 
   outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container }:
-  let
-    contributors = import ./contributors.nix {
-      nixMaintainers = nixpkgs-unstable.lib.maintainers;
-    };
-  in
+    let
+      contributors = import ./contributors.nix {
+        nixMaintainers = nixpkgs-unstable.lib.maintainers;
+      };
+    in
     {
       overlays = rec {
         default = datalad;
