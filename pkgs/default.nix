@@ -10,6 +10,8 @@ in
     version = "git";
 
     src = sources.datalad;
+    
+    propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ pkgs.git-annex ];
 
     meta = oldAttrs.meta // {
       homepage = "https://github.com/datalad/datalad";
