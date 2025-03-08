@@ -2,14 +2,14 @@
 
 let
   dhallScript = ./generator.dhall;
-  
-  authorsToDhall = authors: 
+
+  authorsToDhall = authors:
     let
       authorToDhall = author:
         let
           mkField = name: value:
-            if value != null 
-            then ''${name} = Some "${lib.escape ["\""] value}"'' 
+            if value != null
+            then ''${name} = Some "${lib.escape ["\""] value}"''
             else ''${name} = None Text'';
 
           addWebsiteIfGH = author:
@@ -21,9 +21,9 @@ let
             let
               author = addWebsiteIfGH unvalidAuthor;
             in
-              if author.name != null then author
-              else if author ? "given-names" && author."given-names" != null && author ? "family-names" && author."family-names" != null then author
-              else author // { name = author.github or "n/a"; }; # Fallback
+            if author.name != null then author
+            else if author ? "given-names" && author."given-names" != null && author ? "family-names" && author."family-names" != null then author
+            else author // { name = author.github or "n/a"; }; # Fallback
 
           validAuthor = ensureName author;
 
@@ -38,7 +38,7 @@ let
           ];
         in
         "{ ${lib.concatStringsSep ", " fields} }";
-      
+
       authorsList = lib.concatMapStrings (a: "${authorToDhall a}, ") authors;
     in
     "[ ${lib.removeSuffix ", " authorsList} ]";
@@ -47,8 +47,9 @@ let
     let Citation = ${dhallScript}
     in Citation.createCitation ${authorsToDhall authors} "${lib.escape ["\""] title}" "${version}"
   '';
-  
-in writeShellScriptBin "nix2citation" ''
+
+in
+writeShellScriptBin "nix2citation" ''
   set -e
   
   tmpYamlFile=$(mktemp)

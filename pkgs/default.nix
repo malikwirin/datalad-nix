@@ -3,14 +3,14 @@
 let
   inherit (pkgs) fetchFromGitHub git python3;
 in
-  rec {
+rec {
   default = pkgs.datalad;
 
   dataladGit = default.overrideAttrs (oldAttrs: {
     version = "git";
 
     src = sources.datalad;
-    
+
     propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ pkgs.git-annex ];
 
     meta = oldAttrs.meta // {
