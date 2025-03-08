@@ -22,11 +22,11 @@
   };
 
   outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container }:
-  let
-    contributors = import ./contributors.nix {
-      nixMaintainers = nixpkgs-unstable.lib.maintainers;
-    };
-  in
+    let
+      contributors = import ./contributors.nix {
+        nixMaintainers = nixpkgs-unstable.lib.maintainers;
+      };
+    in
     {
       overlays = rec {
         default = datalad;
@@ -60,10 +60,11 @@
       in
       {
         packages = import ./pkgs/default.nix {
-          inherit pkgs lib;
+          inherit pkgs lib contributors;
           sources = {
             inherit datalad datalad-container;
           };
+          flake = import ./flake.nix;
         };
 
         formatter = treefmt.config.build.wrapper;

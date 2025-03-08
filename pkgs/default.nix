@@ -1,15 +1,17 @@
-{ pkgs, lib, sources }:
+{ pkgs, lib, sources, flake, contributors }:
 
 let
   inherit (pkgs) fetchFromGitHub git python3;
 in
-rec {
+  rec {
   default = pkgs.datalad;
 
   dataladGit = default.overrideAttrs (oldAttrs: {
     version = "git";
 
     src = sources.datalad;
+    
+    propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ pkgs.git-annex ];
 
     meta = oldAttrs.meta // {
       homepage = "https://github.com/datalad/datalad";
@@ -38,5 +40,9 @@ rec {
   full = {
     default = with-extensions.default;
     gitVersion = with-extensions.gitVersion;
+  };
+
+  utils = import ./utils.nix {
+    inherit lib pkgs flake contributors;
   };
 }

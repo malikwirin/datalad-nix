@@ -20,8 +20,8 @@ let
     };
   });
 in
-  {
-    default = withExtensionBase "dataladFull" [ extensions ] datalad;
+{
+  default = withExtensionBase "dataladFull" [ extensions ] datalad;
 
-    gitVersion = withExtensionBase "dataladGitFull" [ extensionsGit ] dataladGit;
-  }
+  gitVersion = withExtensionBase "dataladGitFull" [ extensionsGit ] dataladGit;
+}

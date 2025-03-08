@@ -1,0 +1,8 @@
+authors:
+- email: "abdelmalik.najhi@stud.hs-kempten.de"
+  name: Malik
+  website: "https://github.com/malikwirin"
+cff-version: '1.2.0'
+message: "If you use this software, please cite it as below."
+title: "Datalad-Nix"
+version: git
