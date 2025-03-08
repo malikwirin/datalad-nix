@@ -26,6 +26,14 @@
       contributors = import ./contributors.nix {
         nixMaintainers = nixpkgs-unstable.lib.maintainers;
       };
+      packagesImport = { pkgs, lib }:
+        import ./pkgs/default.nix {
+          inherit pkgs lib contributors;
+          sources = {
+            inherit datalad datalad-container;
+          };
+          flake = import ./flake.nix;
+        };
     in
     {
       overlays = rec {
@@ -33,14 +41,11 @@
 
         datalad = final: prev:
           let
-            packages = import ./pkgs/default.nix {
+            packages = packagesImport {
               pkgs = final;
               # Adding the maintainer is no longer needed in next release of nixpkgs
               lib = prev.lib // {
                 maintainers = prev.lib.maintainers // contributors;
-              };
-              sources = {
-                inherit datalad datalad-container;
               };
             };
           in
@@ -59,12 +64,8 @@
         treefmt = treefmt-nix.lib.evalModule pkgs (import ./treefmt.nix);
       in
       {
-        packages = import ./pkgs/default.nix {
-          inherit pkgs lib contributors;
-          sources = {
-            inherit datalad datalad-container;
-          };
-          flake = import ./flake.nix;
+        packages = packagesImport {
+          inherit pkgs lib;
         };
 
         formatter = treefmt.config.build.wrapper;
