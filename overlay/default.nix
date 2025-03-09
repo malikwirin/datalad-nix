@@ -15,4 +15,5 @@ in
     dataladFull = packages.full.default;
     dataladGit = packages.dataladGit;
     dataladGitFull = packages.full.gitVersion;
+    dataladWithExtensions = packages.with-extensions;
   }
