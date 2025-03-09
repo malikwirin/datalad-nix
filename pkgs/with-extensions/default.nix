@@ -1,13 +1,13 @@
-{ lib, datalad, extensions, dataladGit, extensionsGit }:
+{ lib, datalad, extensions }:
 
 let
   # Extracting all maintainers from extensions
   extensionsMaintainers = maintainers: lib.flatten (
     map (ext: ext.meta.maintainers or [ ]) extensions
   );
-
-  withExtensionBase = programeName: extensions: datalad: datalad.overrideAttrs (oldAttrs: {
-    pname = programeName;
+in
+  datalad.overrideAttrs (oldAttrs: {
+    pname = oldAttrs.pname + "-with-extensions";
 
     propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or [ ]) ++ extensions;
 
@@ -18,10 +18,4 @@ let
           extensionsMaintainers maintainers
       );
     };
-  });
-in
-{
-  default = withExtensionBase "dataladFull" [ extensions ] datalad;
-
-  gitVersion = withExtensionBase "dataladGitFull" [ extensionsGit ] dataladGit;
-}
+  })

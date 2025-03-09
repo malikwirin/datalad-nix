@@ -29,17 +29,24 @@ rec {
     containerSrc = sources.datalad-container;
   };
 
-  with-extensions = import ./with-extensions {
-    inherit lib;
-    datalad = default;
-    dataladGit = dataladGit;
-    extensions = [ container.default ];
-    extensionsGit = [ container.gitVersion ];
+  with-extensions = {datalad, extensions }: import ./with-extensions {
+    inherit lib datalad extensions;
   };
 
-  full = {
-    default = with-extensions.default;
-    gitVersion = with-extensions.gitVersion;
+  full =
+    let
+      allExtensions = [ container.default ];
+      allExtensionsGit = [ container.gitVersion ];
+    in
+    {
+      default = with-extensions {
+        datalad = default;
+        extensions = allExtensions;
+      };
+      gitVersion = with-extensions {
+        datalad = dataladGit;
+        extensions = allExtensionsGit;
+      };
   };
 
   utils = import ./utils.nix {
