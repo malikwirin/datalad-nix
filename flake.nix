@@ -56,7 +56,7 @@
           moduleImport = path: { config, pkgs, ... }:
             import path {
               inherit pkgs config;
-              inherit (pkgs) lib;
+              lib = pkgs.lib;
               overlay = self.overlays.datalad;
             };
         in
