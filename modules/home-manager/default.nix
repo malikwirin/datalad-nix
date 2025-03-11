@@ -5,9 +5,9 @@ let
     inherit pkgs lib overlay config;
   };
 in
-  {
-    options.programs.datalad = common.options;
-    config = common.config {
-      home.packages = [ common.dataladPackage ];
-    };
+{
+  options.programs.datalad = common.options;
+  config = common.config {
+    home.packages = [ common.dataladPackage ];
+  };
 }
