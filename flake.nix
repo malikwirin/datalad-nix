@@ -50,6 +50,22 @@
       };
 
       githubActions = nix-github-actions.lib.mkGithubMatrix { inherit (self) checks; };
+
+      modules = 
+        let
+          moduleImport = path: { config, pkgs, ... }: 
+            import path {
+              inherit pkgs config;
+              inherit (pkgs) lib;
+              overlay = self.overlays.datalad;
+          };
+        in
+          {
+            default = moduleImport ./modules/default.nix;
+
+            nixos = moduleImport ./modules/nixos/default.nix;
+            homeManager = moduleImport ./modules/home-manager/default.nix;
+          };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs-unstable.legacyPackages.${system};
