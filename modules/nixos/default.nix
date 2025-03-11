@@ -1,11 +1,13 @@
 { pkgs, lib, overlay, config }:
 
 let
-  common = import ../common/default.nix { inherit pkgs lib overlay config; };
+  cfg = config.programs.datalad;
+  common = import ../common/default.nix { inherit pkgs lib overlay cfg; };
 in
 {
   options.programs.datalad = common.options;
-  config = common.config {
-    environment.systemPackages = [ common.dataladPackage ];
-  };
+  config = lib.mkIf cfg.enable 
+    {
+      environment.systemPackages = [ common.dataladPackage ];
+    } // common.config;
 }

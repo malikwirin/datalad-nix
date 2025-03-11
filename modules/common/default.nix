@@ -1,13 +1,11 @@
 { lib
 , pkgs
-, config
+, cfg
 , overlay
 }:
 
 with lib;
 let
-  cfg = config.programs.datalad;
-
   extensionNames = [
     "datalad-container"
     # "datalad-metalad"
@@ -81,13 +79,12 @@ in
     extensions = enabledExtensionsPkgs;
   };
 
-  config = domainConfig: mkIf cfg.enable
-    {
-      nixpkgs.overlays = [ overlay ];
+  config = {
+    nixpkgs.overlays = [ overlay ];
 
-      programs.git = {
-        enable = true;
-        # DataLad-specific Git configuration
-      };
-    } // domainConfig;
+    programs.git = {
+      enable = true;
+      # DataLad-specific Git configuration
+    };
+  };
 }
