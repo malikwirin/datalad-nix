@@ -21,3 +21,7 @@ nixpkgs.overlays = [
 ];
 ```
 The additional packages should now be available under `pkgs`.
+
+## Contributing
+Please read the [contributing guidelines](CONTRIBUTING.md) before contributing.
+PRs and issues are always welcome. Needed tasks can be found in the [Agenda](./org/agenda), for example [adding additional modules](./org/agenda/modules/index.md).
