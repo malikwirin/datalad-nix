@@ -1,0 +1,157 @@
+{
+  "nodes": {
+    "datalad": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1734221018,
+        "narHash": "sha256-XwzYlSP2MbEb0U3tuVOq3NNqLTS08UzSfSFBidHbpAY=",
+        "owner": "datalad",
+        "repo": "datalad",
+        "rev": "4c551df6099361b1ca2ec9f3eabf9150c7f89ae0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "datalad",
+        "repo": "datalad",
+        "type": "github"
+      }
+    },
+    "datalad-container": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1726502556,
+        "narHash": "sha256-Q7OftjjU2qUuZ9j7008b6DJEoZnOyZlvLbWamqes5Y8=",
+        "owner": "datalad",
+        "repo": "datalad-container",
+        "rev": "55309f8203ffd124668370deedd187b7a6420bdb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "datalad",
+        "repo": "datalad-container",
+        "type": "github"
+      }
+    },
+    "datalad-nix": {
+      "inputs": {
+        "datalad": "datalad",
+        "datalad-container": "datalad-container",
+        "flake-utils": "flake-utils",
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-58TAxA0ok7NZhfj2bmGfD52OguMyHtgOWUhJC3sJqqM=",
+        "path": "../",
+        "type": "path"
+      },
+      "original": {
+        "path": "../",
+        "type": "path"
+      }
+    },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1741701235,
+        "narHash": "sha256-gBlb8R9gnjUAT5XabJeel3C2iEUiBHx3+91651y3Sqo=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "c630dfa8abcc65984cc1e47fb25d4552c81dd37e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1741646908,
+        "narHash": "sha256-55a1x5k+oFY2QCFjj7Mn5nPa8Do0shVl0m280mOAW/Q=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ab0c5b18dab5e4b5d06ed679f8fd7cdc9970c4be",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "datalad-nix": "datalad-nix",
+        "home-manager": "home-manager",
+        "nixpkgs": [
+          "datalad-nix",
+          "nixpkgs-unstable"
+        ]
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "datalad-nix",
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1739829690,
+        "narHash": "sha256-mL1szCeIsjh6Khn3nH2cYtwO5YXG6gBiTw1A30iGeDU=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "3d0579f5cc93436052d94b73925b48973a104204",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
