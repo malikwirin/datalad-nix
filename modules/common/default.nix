@@ -6,6 +6,7 @@
 
 with lib;
 let
+  ePkgs = pkgs.extend overlay;
   extensionNames = [
     "datalad-container"
     # "datalad-metalad"
@@ -14,7 +15,7 @@ let
 
   extensionPkgs = {
     "datalad-container" =
-      unstable: if unstable then pkgs.datalad-containerGit else pkgs.datalad-container;
+      unstable: if unstable then ePkgs.datalad-containerGit else ePkgs.datalad-container;
   };
 
   extensionBase =
@@ -53,7 +54,7 @@ in
 
     package = mkOption {
       type = types.package;
-      default = if cfg.unstable then pkgs.dataladGit else pkgs.datalad;
+      default = if cfg.unstable then ePkgs.dataladGit else pkgs.datalad;
       defaultText = literalExpression "pkgs.datalad";
 
       description = "The DataLad package to use.";
@@ -74,7 +75,7 @@ in
     };
   };
 
-  dataladPackage = pkgs.dataladWithExtensions {
+  dataladPackage = ePkgs.dataladWithExtensions {
     datalad = cfg.package;
     extensions = enabledExtensionsPkgs;
   };
