@@ -1,6 +1,6 @@
 # Datalad-Nix
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-This Project provides Datalad related packages, an overlay, and soon modules for the use of Datalad with Nix and on NixOS.
+This Project provides Datalad related packages, an overlay, and modules for the use of Datalad with Nix and on NixOS.
 ## Usage
 ### With flake
 #### Add Input
