@@ -1,4 +1,4 @@
-{ pkgs, lib, overlay, config }:
+{ pkgs, lib, overlay, config, ... }:
 
 let
   cfg = config.programs.datalad;
