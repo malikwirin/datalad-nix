@@ -29,7 +29,7 @@ rec {
     containerSrc = sources.datalad-container;
   };
 
-  with-extensions = {datalad, extensions }: import ./with-extensions {
+  with-extensions = { datalad, extensions }: import ./with-extensions {
     inherit lib datalad extensions;
   };
 
@@ -47,7 +47,7 @@ rec {
         datalad = dataladGit;
         extensions = allExtensionsGit;
       };
-  };
+    };
 
   utils = import ./utils.nix {
     inherit lib pkgs flake contributors;
