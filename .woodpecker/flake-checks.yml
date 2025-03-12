@@ -1,0 +1,35 @@
+steps:
+  generate-matrix:
+    image: nixos/nix:latest
+    environment:
+      NIX_CONFIG: "experimental-features = nix-command flakes"
+    commands:
+      - nix-env -iA nixpkgs.jq
+      - mkdir -p .woodpecker
+      - echo "set -Eeu" > .woodpecker/matrix.sh
+      - echo "matrix=\"\$(nix eval --json '.#githubActions.matrix')\"" >> .woodpecker/matrix.sh
+      - echo "echo \$matrix > .woodpecker/matrix.json" >> .woodpecker/matrix.sh
+      - chmod +x .woodpecker/matrix.sh
+      - ./.woodpecker/matrix.sh
+
+  expand-matrix:
+    image: nixos/nix:latest
+    environment:
+      NIX_CONFIG: "experimental-features = nix-command flakes"
+    commands:
+      - nix-env -iA nixpkgs.jq
+      - cat .woodpecker/matrix.json | jq -r '.include[] | "nix build -L '\''.#\(.attr)'\''"' > .woodpecker/build-commands.sh
+      - chmod +x .woodpecker/build-commands.sh
+      - cat .woodpecker/build-commands.sh
+
+  build:
+    image: nixos/nix:latest
+    environment:
+      NIX_CONFIG: "experimental-features = nix-command flakes"
+    commands:
+      - ./.woodpecker/build-commands.sh
+
+when:
+  event:
+    - pull_request
+    - push
