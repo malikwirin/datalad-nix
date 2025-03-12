@@ -52,11 +52,18 @@
       githubActions = nix-github-actions.lib.mkGithubMatrix { inherit (self) checks; };
 
       modules =
+        let
+          importModule = path: { config, lib, pkgs, ... }@args: 
+            import path ({
+              inherit config lib pkgs;
+              overlay = self.overlays.datalad;
+            } // args);
+        in
         {
-          default = ./modules/default.nix;
+          default = importModule ./modules/default.nix;
 
-          nixos = ./modules/nixos/default.nix;
-          homeManager = ./modules/home-manager/default.nix;
+          nixos = importModule ./modules/nixos/default.nix;
+          homeManager = importModule ./modules/home-manager/default.nix;
         };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
