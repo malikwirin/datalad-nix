@@ -10,14 +10,14 @@ let
     };
   };
 in
-  {
-    dataladGit = packages.dataladGit;
+{
+  dataladGit = packages.dataladGit;
 
-    datalad-container = packages.container.default;
-    datalad-containerGit = packages.container.gitVersion;
+  datalad-container = packages.container.default;
+  datalad-containerGit = packages.container.gitVersion;
 
-    dataladFull = packages.full.default;
-    dataladGitFull = packages.full.gitVersion;
+  dataladFull = packages.full.default;
+  dataladGitFull = packages.full.gitVersion;
 
-    dataladWithExtensions = packages.with-extensions;
-  }
+  dataladWithExtensions = packages.with-extensions;
+}
