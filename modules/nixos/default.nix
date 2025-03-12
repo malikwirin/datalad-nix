@@ -6,7 +6,7 @@ let
 in
 {
   options.programs.datalad = common.options;
-  config = lib.mkIf cfg.enable 
+  config = lib.mkIf cfg.enable
     {
       environment.systemPackages = [ common.dataladPackage ];
     } // common.config;

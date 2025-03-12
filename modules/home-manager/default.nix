@@ -11,6 +11,6 @@ in
   options.programs.datalad = common.options;
   config = lib.mkIf cfg.enable
     common.config // {
-      home.packages = [ common.dataladPackage ];
-    };
+    home.packages = [ common.dataladPackage ];
+  };
 }

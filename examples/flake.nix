@@ -23,7 +23,7 @@
 
 
       nixpkgsfor = system:
-      nixpkgs.legacyPackages.${system};
+        nixpkgs.legacyPackages.${system};
 
       mkNixosConfig = system: nixpkgs.lib.nixosSystem {
         inherit system;
@@ -31,13 +31,13 @@
           {
             system.stateVersion = stateVersion;
             boot.isContainer = true;
-            
+
             nixpkgs.hostPlatform = system;
-            
+
             users.users.example = {
               isNormalUser = true;
             };
-            
+
             networking.hostName = "example";
           }
           datalad-nix.modules.nixos
@@ -69,7 +69,8 @@
           }
         ];
       };
-    in {
+    in
+    {
       nixosConfigurations = {
         "x86_64" = mkNixosConfig "x86_64-linux";
         "aarch64" = mkNixosConfig "aarch64-linux";
