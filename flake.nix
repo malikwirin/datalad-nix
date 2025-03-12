@@ -19,9 +19,14 @@
       url = "github:datalad/datalad-container";
       flake = false;
     };
+
+    nix-github-actions = {
+      url = "github:nix-community/nix-github-actions";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container }:
+  outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container, nix-github-actions }:
     let
       contributors = import ./contributors.nix {
         nixMaintainers = nixpkgs-unstable.lib.maintainers;
@@ -43,6 +48,8 @@
           inherit packagesImport contributors;
         };
       };
+
+      githubActions = nix-github-actions.lib.mkGithubMatrix { inherit (self) checks; };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs-unstable.legacyPackages.${system};
