@@ -54,7 +54,7 @@ in
 
     package = mkOption {
       type = types.package;
-      default = if cfg.unstable then ePkgs.dataladGit else pkgs.datalad;
+      default = if cfg.unstable then ePkgs.dataladGit else ePkgs.datalad;
       defaultText = literalExpression "pkgs.datalad";
 
       description = "The DataLad package to use.";
@@ -81,8 +81,6 @@ in
   };
 
   config = {
-    nixpkgs.overlays = [ overlay ];
-
     programs.git = {
       enable = true;
       # DataLad-specific Git configuration
