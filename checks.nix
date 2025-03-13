@@ -23,11 +23,11 @@ let
 
       linuxPackages =
         if builtins.elem system linuxSystems
-          then { "nixos-module" = nixosConfigurations."{system}".config.system.build.toplevel; }
+        then { "nixos-module" = nixosConfigurations."{system}".config.system.build.toplevel; }
         else { };
-        in
-        packages // linuxPackages
-      );
+    in
+    packages // linuxPackages
+  );
 
   mkPackageCheck = name: pkg:
     # skip certain packages
