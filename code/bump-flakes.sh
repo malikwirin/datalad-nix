@@ -3,14 +3,25 @@
 #!nix-shell --pure
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
-nix_shell_cmd () {
-  nix shell $REPO_ROOT/#dataladGit -c "$1"
+EXAMPLES_DIR="${REPO_ROOT}/examples"
+
+bump_flake() {
+    local dir=$1
+    cd "$dir" || exit 1
+    echo "Updating flake in $dir"
+    
+    nix shell "$REPO_ROOT/#dataladGit" -c datalad run \
+        -m "Bump Flake" \
+        --input flake.lock --input flake.nix \
+        --output flake.lock \
+        "nix flake update"
+        
+    return $?
 }
 
-cd "$REPO_ROOT"
-BUMP_FLAKE='datalad run -m "Bump Flake" \
-	--input flake.lock --input flake.nix \
-	--output flake.lock \
-	"nix flake update"'
+bump_flake "$REPO_ROOT"
+MAIN_RESULT=$?
 
-nix_shell_cmd $BUMP_FLAKE && cd $REPO_ROOT/exampes && nix_shell_cmd $BUMP_FLAKE
+if [ $MAIN_RESULT -eq 0 ] && [ -d "$EXAMPLES_DIR" ]; then
+    bump_flake "$EXAMPLES_DIR"
+fi
