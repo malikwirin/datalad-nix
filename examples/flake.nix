@@ -25,32 +25,6 @@
       nixpkgsfor = system:
         nixpkgs.legacyPackages.${system};
 
-      mkNixosConfig = system: nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          {
-            system.stateVersion = stateVersion;
-            boot.isContainer = true;
-
-            nixpkgs.hostPlatform = system;
-
-            users.users.example = {
-              isNormalUser = true;
-            };
-
-            networking.hostName = "example";
-          }
-          datalad-nix.modules.nixos
-          {
-            programs.datalad = {
-              enable = true;
-              unstable = false;
-              extensions.datalad-container.enable = true;
-            };
-          }
-        ];
-      };
-
       mkHomeConfig = system: home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgsfor system;
         extraSpecialArgs = {
@@ -70,10 +44,10 @@
         ];
       };
     in
-    {
-      nixosConfigurations = {
-        "x86_64" = mkNixosConfig "x86_64-linux";
-        "aarch64" = mkNixosConfig "aarch64-linux";
+    rec {
+      nixosConfigurations = import ./nixosConfigurations.nix {
+        inherit nixpkgs stateVersion;
+        inherit (datalad-nix) modules;
       };
 
       homeConfigurations = nixpkgs.lib.genAttrs
@@ -87,7 +61,7 @@
           };
           
           linuxPackages = if builtins.elem system linuxSystems 
-            then { "nixos-module" = (mkNixosConfig system).config.system.build.toplevel; } 
+            then { "nixos-module" = nixosConfigurations."system".config.system.build.toplevel; } 
             else { };
         in
         packages // linuxPackages
