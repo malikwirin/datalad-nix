@@ -53,15 +53,16 @@
       homeConfigurations = nixpkgs.lib.genAttrs
         allSystems
         (system: mkHomeConfig system);
-      
-      packages = nixpkgs.lib.genAttrs allSystems (system: 
+
+      packages = nixpkgs.lib.genAttrs allSystems (system:
         let
           packages = {
             "home-module" = (mkHomeConfig system).activationPackage;
           };
-          
-          linuxPackages = if builtins.elem system linuxSystems 
-            then { "nixos-module" = nixosConfigurations."system".config.system.build.toplevel; } 
+
+          linuxPackages =
+            if builtins.elem system linuxSystems
+            then { "nixos-module" = nixosConfigurations."system".config.system.build.toplevel; }
             else { };
         in
         packages // linuxPackages

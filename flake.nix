@@ -53,7 +53,7 @@
 
       modules =
         let
-          importModule = path: { config, lib, pkgs, ... }@args: 
+          importModule = path: { config, lib, pkgs, ... }@args:
             import path ({
               inherit config lib pkgs;
               overlay = self.overlays.datalad;

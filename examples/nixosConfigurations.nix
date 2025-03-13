@@ -4,16 +4,16 @@ let
     inherit system;
     modules = [
       {
-      system.stateVersion = stateVersion;
-      boot.isContainer = true;
+        system.stateVersion = stateVersion;
+        boot.isContainer = true;
 
-      nixpkgs.hostPlatform = system;
+        nixpkgs.hostPlatform = system;
 
-      users.users.example = {
-        isNormalUser = true;
-      };
+        users.users.example = {
+          isNormalUser = true;
+        };
 
-      networking.hostName = "example";
+        networking.hostName = "example";
       }
       modules.nixos
       {
