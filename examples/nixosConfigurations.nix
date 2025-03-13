@@ -27,6 +27,6 @@ let
   };
 in
 {
-  "x86_64" = mkNixosConfig "x86_64-linux";
-  "aarch64" = mkNixosConfig "aarch64-linux";
+  "x86_64-linux" = mkNixosConfig "x86_64-linux";
+  "aarch64-linux" = mkNixosConfig "aarch64-linux";
 }
