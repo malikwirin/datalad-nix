@@ -5,6 +5,11 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -26,7 +31,7 @@
     };
   };
 
-  outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container, nix-github-actions }:
+  outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container, nix-github-actions, home-manager }:
     let
       contributors = import ./contributors.nix {
         nixMaintainers = nixpkgs-unstable.lib.maintainers;
