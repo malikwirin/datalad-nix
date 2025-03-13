@@ -73,9 +73,9 @@
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         nixpkgs = nixpkgs-unstable;
-        stateVersion = builtins.substring 0 5 nixpkgs.lib.version;
         pkgs = nixpkgs-unstable.legacyPackages.${system};
         lib = pkgs.lib;
+        stateVersion = builtins.substring 0 5 lib.version;
         treefmt = treefmt-nix.lib.evalModule pkgs (import ./treefmt.nix);
       in
       rec {
