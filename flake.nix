@@ -72,6 +72,8 @@
         };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
+        nixpkgs = nixpkgs-unstable;
+        stateVersion = builtins.substring 0 5 nixpkgs.lib.version;
         pkgs = nixpkgs-unstable.legacyPackages.${system};
         lib = pkgs.lib;
         treefmt = treefmt-nix.lib.evalModule pkgs (import ./treefmt.nix);
@@ -84,7 +86,7 @@
         formatter = treefmt.config.build.wrapper;
 
         checks = import ./checks.nix {
-          inherit lib treefmt self packages;
+          inherit nixpkgs stateVersion lib treefmt self home-manager packages;
         };
       });
 }
