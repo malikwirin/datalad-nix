@@ -8,10 +8,7 @@
 
     nixpkgs.follows = "datalad-nix/nixpkgs-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.follows = "datalad-nix/home-manager";
   };
 
   outputs = { nixpkgs, home-manager, datalad-nix, ... }:
@@ -20,29 +17,6 @@
       darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
       allSystems = linuxSystems ++ darwinSystems;
       stateVersion = builtins.substring 0 5 nixpkgs.lib.version;
-
-
-      nixpkgsfor = system:
-        nixpkgs.legacyPackages.${system};
-
-      mkHomeConfig = system: home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgsfor system;
-        extraSpecialArgs = {
-          inherit datalad-nix system;
-        };
-        modules = [
-          datalad-nix.modules.default
-          {
-            programs.datalad = {
-              enable = true;
-              unstable = true;
-              extensions.datalad-container = {
-                enable = true;
-              };
-            };
-          }
-        ];
-      };
     in
     rec {
       nixosConfigurations = import ./nixosConfigurations.nix {
@@ -50,19 +24,20 @@
         inherit (datalad-nix) modules;
       };
 
-      homeConfigurations = nixpkgs.lib.genAttrs
-        allSystems
-        (system: mkHomeConfig system);
+      homeConfigurations = import ./homeConfigurations.nix {
+        inherit nixpkgs home-manager;
+        inherit (datalad-nix) modules;
+      };
 
       packages = nixpkgs.lib.genAttrs allSystems (system:
         let
           packages = {
-            "home-module" = (mkHomeConfig system).activationPackage;
+            "home-module" = homeConfigurations."${system}".activationPackage;
           };
 
           linuxPackages =
             if builtins.elem system linuxSystems
-            then { "nixos-module" = nixosConfigurations."system".config.system.build.toplevel; }
+            then { "nixos-module" = nixosConfigurations."{system}".config.system.build.toplevel; }
             else { };
         in
         packages // linuxPackages
