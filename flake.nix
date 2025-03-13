@@ -69,24 +69,7 @@
       let
         pkgs = nixpkgs-unstable.legacyPackages.${system};
         lib = pkgs.lib;
-
         treefmt = treefmt-nix.lib.evalModule pkgs (import ./treefmt.nix);
-
-        mkPackageCheck = name: pkg:
-          # skip certain packages
-          if (builtins.elem name [ "utils" "with-extensions" ])
-          then { }
-          else if (lib.isDerivation pkg)
-          then {
-            # If it's a regular derivation, include it directly
-            ${name} = pkg;
-          }
-          else if (pkg ? default && lib.isDerivation pkg.default)
-          then {
-            # If it has a default attribute that's a derivation, include that
-            "${name}-default" = pkg.default;
-          }
-          else { };
       in
       rec {
         packages = packagesImport {
@@ -95,8 +78,8 @@
 
         formatter = treefmt.config.build.wrapper;
 
-        checks = {
-          formatting = treefmt.config.build.check self;
-        } // (lib.concatMapAttrs mkPackageCheck packages);
+        checks = import ./checks.nix {
+          inherit lib treefmt self packages;
+        };
       });
 }
