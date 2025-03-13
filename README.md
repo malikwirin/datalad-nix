@@ -13,8 +13,25 @@ inputs = {
   };
 };
 ```
+#### Use module
+- Add the module to your configuration.
+``` nix
+modules = [
+  datalad-nix.modules.default
+  ./configuration.nix
+];
+```
+- Enable the datalad and its extensions.
+``` nix
+programs.datalad = {
+  enable = true;
+  unstable = false;
+  extensions.datalad-container.enable = true;
+};
+```
+
 #### Overlay
-Now add the overlay to your lists of overlays.
+Adding the overlay to your lists of overlays.
 ``` nix
 nixpkgs.overlays = [
   datalad-nix.overlay.default
