@@ -1,4 +1,4 @@
-{ config, lib, pkgs, overlay, ... }:
+{ config, lib, pkgs, overlay, ... }@args:
 
 let
   isHomeManager = lib.hasAttrByPath [ "home" "username" ] config;
@@ -8,8 +8,8 @@ let
     then ./home-manager/default.nix
     else ./nixos/default.nix;
 
-  module = import moduleFile {
+  module = import moduleFile (args // {
     inherit config lib pkgs overlay;
-  };
+  });
 in
 module
