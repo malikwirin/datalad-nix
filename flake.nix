@@ -5,6 +5,11 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -26,7 +31,7 @@
     };
   };
 
-  outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container, nix-github-actions }:
+  outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container, nix-github-actions, home-manager }:
     let
       contributors = import ./contributors.nix {
         nixMaintainers = nixpkgs-unstable.lib.maintainers;
@@ -50,28 +55,28 @@
       };
 
       githubActions = nix-github-actions.lib.mkGithubMatrix { inherit (self) checks; };
+
+      modules =
+        let
+          importModule = path: { config, lib, pkgs, ... }@args:
+            import path ({
+              inherit config lib pkgs;
+              overlay = self.overlays.datalad;
+            } // args);
+        in
+        rec {
+          default = nixos;
+
+          nixos = importModule ./modules/nixos/default.nix;
+          homeManager = importModule ./modules/home-manager/default.nix;
+        };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
+        nixpkgs = nixpkgs-unstable;
         pkgs = nixpkgs-unstable.legacyPackages.${system};
         lib = pkgs.lib;
-
+        stateVersion = builtins.substring 0 5 lib.version;
         treefmt = treefmt-nix.lib.evalModule pkgs (import ./treefmt.nix);
-
-        mkPackageCheck = name: pkg:
-          # skip certain packages
-          if (builtins.elem name [ "utils" "with-extensions" ])
-          then { }
-          else if (lib.isDerivation pkg)
-          then {
-            # If it's a regular derivation, include it directly
-            ${name} = pkg;
-          }
-          else if (pkg ? default && lib.isDerivation pkg.default)
-          then {
-            # If it has a default attribute that's a derivation, include that
-            "${name}-default" = pkg.default;
-          }
-          else { };
       in
       rec {
         packages = packagesImport {
@@ -80,8 +85,8 @@
 
         formatter = treefmt.config.build.wrapper;
 
-        checks = {
-          formatting = treefmt.config.build.check self;
-        } // (lib.concatMapAttrs mkPackageCheck packages);
+        checks = import ./checks {
+          inherit nixpkgs stateVersion lib treefmt self home-manager packages system;
+        };
       });
 }

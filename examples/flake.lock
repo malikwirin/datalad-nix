@@ -32,6 +32,27 @@
         "type": "github"
       }
     },
+    "datalad-nix": {
+      "inputs": {
+        "datalad": "datalad",
+        "datalad-container": "datalad-container",
+        "flake-utils": "flake-utils",
+        "home-manager": "home-manager",
+        "nix-github-actions": "nix-github-actions",
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-l9miNlAMJYRsjhTiOoKy6DDXfysSDQbiO6h3IQA9LGE=",
+        "path": "../",
+        "type": "path"
+      },
+      "original": {
+        "path": "../",
+        "type": "path"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -53,6 +74,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "datalad-nix",
           "nixpkgs-unstable"
         ]
       },
@@ -73,6 +95,7 @@
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
+          "datalad-nix",
           "nixpkgs-unstable"
         ]
       },
@@ -108,13 +131,15 @@
     },
     "root": {
       "inputs": {
-        "datalad": "datalad",
-        "datalad-container": "datalad-container",
-        "flake-utils": "flake-utils",
-        "home-manager": "home-manager",
-        "nix-github-actions": "nix-github-actions",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "treefmt-nix": "treefmt-nix"
+        "datalad-nix": "datalad-nix",
+        "home-manager": [
+          "datalad-nix",
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "datalad-nix",
+          "nixpkgs-unstable"
+        ]
       }
     },
     "systems": {
@@ -135,6 +160,7 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
+          "datalad-nix",
           "nixpkgs-unstable"
         ]
       },

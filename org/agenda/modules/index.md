@@ -1,0 +1,1 @@
+- add modules for nix-darwin & Nix-on-Droid
