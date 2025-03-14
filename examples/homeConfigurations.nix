@@ -9,7 +9,9 @@ let
         home = rec {
           inherit stateVersion;
           username = "example";
-          homeDirectory = "/home/${username}";
+          homeDirectory = if builtins.match ".*darwin" system != null
+            then "/Users/${username}"
+            else "/home/${username}";
         };
 
         programs.datalad = {
