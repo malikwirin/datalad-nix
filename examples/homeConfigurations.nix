@@ -6,9 +6,10 @@ let
     modules = [
       modules.homeManager
       {
-        home = {
+        home = rec {
           inherit stateVersion;
           username = "example";
+          homeDirectory = "/home/${username}";
         };
 
         programs.datalad = {
