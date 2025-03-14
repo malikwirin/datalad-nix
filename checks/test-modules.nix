@@ -16,13 +16,15 @@ let
   hasNixosConfig = isLinuxSystem && nixosConfigs ? ${system};
   hasHomeConfig = homeConfigs ? ${system};
 
-  nixosChecks = if hasNixosConfig 
-    then { "nixos-${system}" = nixosConfigs.${system}.config.system.build.toplevel; } 
-    else {};
+  nixosChecks =
+    if hasNixosConfig
+    then { "nixos-${system}" = nixosConfigs.${system}.config.system.build.toplevel; }
+    else { };
 
-  homeChecks = if hasHomeConfig 
-    then { "home-${system}" = homeConfigs.${system}.activationPackage; } 
-    else {};
+  homeChecks =
+    if hasHomeConfig
+    then { "home-${system}" = homeConfigs.${system}.activationPackage; }
+    else { };
 
 in
 nixosChecks // homeChecks
