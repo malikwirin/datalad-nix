@@ -17,7 +17,7 @@ inputs = {
 - Add the module to your configuration.
 ``` nix
 modules = [
-  datalad-nix.modules.default
+  datalad-nix.modules.default # or 'homeManager' instead of default for home-manager
   ./configuration.nix
 ];
 ```
