@@ -4,7 +4,7 @@ let
   mkHomeConfig = system: home-manager.lib.homeManagerConfiguration {
     pkgs = nixpkgs.legacyPackages.${system};
     modules = [
-      modules.default
+      modules.homeManager
       {
         programs.datalad = {
           enable = true;

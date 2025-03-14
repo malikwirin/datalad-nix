@@ -64,8 +64,8 @@
               overlay = self.overlays.datalad;
             } // args);
         in
-        {
-          default = importModule ./modules/default.nix;
+        rec {
+          default = nixos;
 
           nixos = importModule ./modules/nixos/default.nix;
           homeManager = importModule ./modules/home-manager/default.nix;

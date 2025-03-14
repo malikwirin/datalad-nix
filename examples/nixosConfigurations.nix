@@ -15,7 +15,7 @@ let
 
         networking.hostName = "example";
       }
-      modules.nixos
+      modules.default
       {
         programs.datalad = {
           enable = true;
