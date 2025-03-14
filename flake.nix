@@ -85,7 +85,7 @@
 
         formatter = treefmt.config.build.wrapper;
 
-        checks = import ./checks.nix {
+        checks = import ./checks {
           inherit nixpkgs stateVersion lib treefmt self home-manager packages;
         };
       });
