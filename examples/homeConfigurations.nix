@@ -6,7 +6,11 @@ let
     modules = [
       modules.homeManager
       {
-        home.stateVersion = stateVersion;
+        home = {
+          inherit stateVersion;
+          username = "example";
+        };
+
         programs.datalad = {
           enable = true;
           unstable = true;
