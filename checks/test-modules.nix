@@ -1,43 +1,32 @@
-{ nixpkgs, stateVersion, modules, home-manager, pkgs }:
+{ nixpkgs, stateVersion, lib, modules, home-manager }:
 
 let
-  moduleWorks = system:
-    let
-      result = builtins.tryEval (
-        let
-          nixosConfig = import ../examples/nixosConfigurations.nix {
-            inherit nixpkgs stateVersion modules;
-          };
-
-          homeConfig = import ./examples/homeConfigurations.nix {
-            inherit home-manager nixpkgs modules;
-          };
-
-          nixosTest = nixosConfig."${system}";
-          homeTest = homeConfig."${system}";
-        in
-        true
-      );
-    in
-    result.success;
-
-  mkSystemTest = system: {
-    name = "test-modules-${system}";
-    value = pkgs.runCommand "test-modules-${system}" { } ''
-      if [[ "${toString (moduleWorks system)}" == "true" ]]; then
-        echo "Module test for ${system} passed" > $out
-      else
-        echo "Module test for ${system} failed"
-        exit 1
-      fi
-    '';
+  linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
+  darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
+  allSystems = linuxSystems ++ darwinSystems;
+  
+  nixosConfigs = import ../examples/nixosConfigurations.nix {
+    inherit nixpkgs stateVersion modules;
   };
-
-  systemTests = builtins.listToAttrs (map mkSystemTest [
-    "x86_64-linux"
-    "aarch64-linux"
-    "x86_64-darwin"
-    "aarch64-darwin"
-  ]);
+  
+  homeConfigs = import ../examples/homeConfigurations.nix {
+    inherit nixpkgs home-manager modules;
+  };
+  
+  nixosChecks = lib.genAttrs 
+    (builtins.filter (system: nixosConfigs ? ${system}) linuxSystems)
+    (system: nixosConfigs.${system}.config.system.build.toplevel);
+  
+  homeChecks = lib.genAttrs 
+    (builtins.filter (system: homeConfigs ? ${system}) allSystems)
+    (system: homeConfigs.${system}.activationPackage);
+  
+  renamedNixosChecks = lib.mapAttrs' 
+    (name: value: { name = "nixos-${name}"; value = value; }) 
+    nixosChecks;
+  
+  renamedHomeChecks = lib.mapAttrs' 
+    (name: value: { name = "home-${name}"; value = value; }) 
+    homeChecks;
 in
-systemTests
+renamedNixosChecks // renamedHomeChecks
