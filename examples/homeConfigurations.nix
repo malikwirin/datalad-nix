@@ -1,4 +1,4 @@
-{ home-manager, nixpkgs, modules }:
+{ home-manager, nixpkgs, modules, stateVersion }:
 
 let
   mkHomeConfig = system: home-manager.lib.homeManagerConfiguration {
@@ -6,6 +6,7 @@ let
     modules = [
       modules.homeManager
       {
+        home.stateVersion = stateVersion;
         programs.datalad = {
           enable = true;
           unstable = true;

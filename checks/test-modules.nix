@@ -8,7 +8,7 @@ let
   };
 
   homeConfigs = import ../examples/homeConfigurations.nix {
-    inherit nixpkgs home-manager modules;
+    inherit nixpkgs home-manager modules stateVersion;
   };
 
   isLinuxSystem = builtins.elem system linuxSystems;
