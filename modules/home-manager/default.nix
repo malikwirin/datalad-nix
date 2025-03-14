@@ -1,16 +1,8 @@
-{ pkgs, lib, overlay, config, ... }:
+{ pkgs, lib, overlay, config, ... }@args:
 
 let
-  cfg = config.programs.datalad;
-
-  common = import ../common/default.nix {
-    inherit pkgs lib overlay cfg;
-  };
+specificCfg = dataladPackage: {
+  home.packages = [ dataladPackage ];
+};
 in
-{
-  options.programs.datalad = common.options;
-  config = lib.mkIf cfg.enable
-    common.config // {
-    home.packages = [ common.dataladPackage ];
-  };
-}
+import ../common/default.nix (args // { inherit pkgs lib overlay config specificCfg; })

@@ -1,11 +1,14 @@
 { lib
 , pkgs
-, cfg
+, config
 , overlay
+, specificCfg
+, ...
 }:
 
 with lib;
 let
+  cfg = config.programs.datalad;
   ePkgs = pkgs.extend overlay;
   extensionNames = [
     "datalad-container"
@@ -47,9 +50,14 @@ let
 
   getExtPackage = name: cfg.extensions.${name}.package;
   enabledExtensionsPkgs = map getExtPackage enabledExtNames;
+
+  dataladPackage = ePkgs.dataladWithExtensions {
+    datalad = cfg.package;
+    extensions = enabledExtensionsPkgs;
+  };
 in
 {
-  options = {
+  options.programs.datalad = {
     enable = mkEnableOption "DataLad";
 
     package = mkOption {
@@ -75,15 +83,10 @@ in
     };
   };
 
-  dataladPackage = ePkgs.dataladWithExtensions {
-    datalad = cfg.package;
-    extensions = enabledExtensionsPkgs;
-  };
-
   config = {
     programs.git = {
       enable = true;
       # DataLad-specific Git configuration
     };
-  };
+  } // specificCfg dataladPackage;
 }
