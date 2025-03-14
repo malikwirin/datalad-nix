@@ -1,9 +1,7 @@
-{ nixpkgs, stateVersion, lib, modules, home-manager }:
+{ nixpkgs, stateVersion, modules, home-manager, system }:
 
 let
   linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
-  darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
-  allSystems = linuxSystems ++ darwinSystems;
 
   nixosConfigs = import ../examples/nixosConfigurations.nix {
     inherit nixpkgs stateVersion modules;
@@ -13,20 +11,18 @@ let
     inherit nixpkgs home-manager modules;
   };
 
-  nixosChecks = lib.genAttrs
-    (builtins.filter (system: nixosConfigs ? ${system}) linuxSystems)
-    (system: nixosConfigs.${system}.config.system.build.toplevel);
+  isLinuxSystem = builtins.elem system linuxSystems;
 
-  homeChecks = lib.genAttrs
-    (builtins.filter (system: homeConfigs ? ${system}) allSystems)
-    (system: homeConfigs.${system}.activationPackage);
+  hasNixosConfig = isLinuxSystem && nixosConfigs ? ${system};
+  hasHomeConfig = homeConfigs ? ${system};
 
-  renamedNixosChecks = lib.mapAttrs'
-    (name: value: { name = "nixos-${name}"; value = value; })
-    nixosChecks;
+  nixosChecks = if hasNixosConfig 
+    then { "nixos-${system}" = nixosConfigs.${system}.config.system.build.toplevel; } 
+    else {};
 
-  renamedHomeChecks = lib.mapAttrs'
-    (name: value: { name = "home-${name}"; value = value; })
-    homeChecks;
+  homeChecks = if hasHomeConfig 
+    then { "home-${system}" = homeConfigs.${system}.activationPackage; } 
+    else {};
+
 in
-renamedNixosChecks // renamedHomeChecks
+nixosChecks // homeChecks

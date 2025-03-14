@@ -1,4 +1,4 @@
-{ nixpkgs, stateVersion, lib, treefmt, self, home-manager, packages }:
+{ nixpkgs, stateVersion, lib, treefmt, self, home-manager, system, packages }:
 
 let
   mkPackageCheck = name: pkg:
@@ -18,7 +18,7 @@ let
     else { };
 
   module-tests = import ./test-modules.nix {
-    inherit nixpkgs stateVersion lib home-manager;
+    inherit nixpkgs stateVersion home-manager system;
     modules = self.modules;
   };
 in
