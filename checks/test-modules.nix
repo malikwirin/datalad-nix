@@ -8,11 +8,11 @@ let
           nixosConfig = import ../examples/nixosConfigurations.nix {
             inherit nixpkgs stateVersion modules;
           };
-          
+
           homeConfig = import ./examples/homeConfigurations.nix {
             inherit home-manager nixpkgs modules;
           };
-          
+
           nixosTest = nixosConfig."${system}";
           homeTest = homeConfig."${system}";
         in
@@ -20,10 +20,10 @@ let
       );
     in
     result.success;
-    
+
   mkSystemTest = system: {
     name = "test-modules-${system}";
-    value = pkgs.runCommand "test-modules-${system}" {} ''
+    value = pkgs.runCommand "test-modules-${system}" { } ''
       if [[ "${toString (moduleWorks system)}" == "true" ]]; then
         echo "Module test for ${system} passed" > $out
       else
@@ -32,9 +32,12 @@ let
       fi
     '';
   };
-  
+
   systemTests = builtins.listToAttrs (map mkSystemTest [
-    "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"
+    "x86_64-linux"
+    "aarch64-linux"
+    "x86_64-darwin"
+    "aarch64-darwin"
   ]);
 in
 systemTests

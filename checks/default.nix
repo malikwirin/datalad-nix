@@ -17,10 +17,10 @@ let
     }
     else { };
 
-    module-tests = import ./test-modules.nix {
-      inherit nixpkgs stateVersion home-manager pkgs;
-      modules = self.modules;
-    };
+  module-tests = import ./test-modules.nix {
+    inherit nixpkgs stateVersion home-manager pkgs;
+    modules = self.modules;
+  };
 in
 {
   formatting = treefmt.config.build.check self;
