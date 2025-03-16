@@ -22,10 +22,20 @@ steps:
       NIX_CONFIG: "experimental-features = nix-command flakes"
     commands:
       - echo "Evaluating \${ATTR}"
-      - nix eval -v --explain '.#\${ATTR}'
+      - nix eval -v '.#\${ATTR}'
 
 matrix:
   include:
+
+EOF
+
+echo "Adding Matrix attributes..."
+cat "${REPO_ROOT}/.woodpecker/matrix.json" | \
+  jq -r '.include[] | .attr | select(contains("formatting") | not)' | \
+  sed 's/^githubActions\.//' | \
+  sed 's/^/    - ATTR: /' >> "${REPO_ROOT}/.woodpecker/eval-checks.yml"
+
+cat >> "${REPO_ROOT}/.woodpecker/eval-checks.yml" << EOF
 
 depends_on:
   - formatting-check
@@ -35,12 +45,6 @@ when:
     - pull_request
     - push
 EOF
-
-echo "Adding Matrix attributes..."
-cat "${REPO_ROOT}/.woodpecker/matrix.json" | \
-  jq -r '.include[] | .attr | select(contains("formatting") | not)' | \
-  sed 's/^githubActions\.//' | \
-  sed 's/^/    - ATTR: /' >> "${REPO_ROOT}/.woodpecker/eval-checks.yml"
 
 rm "${REPO_ROOT}/.woodpecker/matrix.json"
 echo "✅ eval-checks.yml updated"

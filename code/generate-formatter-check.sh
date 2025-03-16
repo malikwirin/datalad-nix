@@ -18,12 +18,7 @@ steps:
     environment:
       NIX_CONFIG: "experimental-features = nix-command flakes"
     commands:
-      - |
-        NIX_ARCH=\$(nix eval --raw --expr 'builtins.currentSystem')
-        echo "Current system platform: \${NIX_ARCH}"
-
-        echo "Running formatting check for \${NIX_ARCH}..."
-        nix build -L .#checks.\${NIX_ARCH}."formatting"
+      - nix build -L .#checks.x86_64-linux."formatting"
 
 when:
   event:
