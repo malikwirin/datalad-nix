@@ -1,0 +1,1 @@
+There should be a regular workflow running on (ci.codeberg.org) to update "all the things" (e.g. the citation file, the lock file, the workflow files) using datalad and sending a PR to the main branch.
