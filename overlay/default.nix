@@ -11,7 +11,7 @@ let
   };
 in
 {
-  dataladGit = packages.dataladGit;
+  inherit (packages) dataladGit forgejo-aneksajo;
 
   datalad-container = packages.container.default;
   datalad-containerGit = packages.container.gitVersion;
