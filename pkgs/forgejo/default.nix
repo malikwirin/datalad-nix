@@ -16,7 +16,8 @@ let
     version = rev;
     inherit vendorHash npmDepsHash;
   };
-in {
+in
+{
   inherit default;
 
   aneksajo = rec {

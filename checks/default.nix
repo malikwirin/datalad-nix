@@ -2,14 +2,14 @@
 
 let
   mkPackageCheck = name: pkg:
-  let
-    isBroken = 
-      if (lib.isDerivation pkg && pkg ? meta && pkg.meta ? broken)
-      then pkg.meta.broken
-      else if (pkg ? default && lib.isDerivation pkg.default && pkg.default ? meta && pkg.default.meta ? broken)
-      then pkg.default.meta.broken
-      else false;
-  in
+    let
+      isBroken =
+        if (lib.isDerivation pkg && pkg ? meta && pkg.meta ? broken)
+        then pkg.meta.broken
+        else if (pkg ? default && lib.isDerivation pkg.default && pkg.default ? meta && pkg.default.meta ? broken)
+        then pkg.default.meta.broken
+        else false;
+    in
     # skip certain packages
     if (builtins.elem name [ "utils" "with-extensions" ] || isBroken)
     then { }
