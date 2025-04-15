@@ -2,6 +2,10 @@
 
 let
   inherit (pkgs) fetchFromGitHub git python3;
+  forgejo = import ./forgejo {
+    default = pkgs.forgejo;
+    inherit lib pkgs;
+  };
 in
 rec {
   default = pkgs.datalad;
@@ -48,6 +52,8 @@ rec {
         extensions = allExtensionsGit;
       };
     };
+
+  forgejo-aneksajo = forgejo.aneksajo.default;
 
   utils = import ./utils.nix {
     inherit lib pkgs flake contributors;
