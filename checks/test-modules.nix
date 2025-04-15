@@ -1,10 +1,10 @@
-{ nixpkgs, stateVersion, modules, home-manager, system }:
+{ nixpkgs, stateVersion, modules, home-manager, system, overlays }:
 
 let
   linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
 
   nixosConfigs = import ../examples/nixosConfigurations.nix {
-    inherit nixpkgs stateVersion modules;
+    inherit nixpkgs stateVersion modules overlays;
   };
 
   homeConfigs = import ../examples/homeConfigurations.nix {

@@ -1,13 +1,20 @@
-{ nixpkgs, stateVersion, modules }:
+{ nixpkgs, stateVersion, modules, overlays }:
 let
   mkNixosConfig = system: nixpkgs.lib.nixosSystem {
     inherit system;
-    modules = [
+    modules = let
+      pkgs = import nixpkgs { inherit system; };
+    in [
       {
         system.stateVersion = stateVersion;
         boot.isContainer = true;
 
-        nixpkgs.hostPlatform = system;
+        nixpkgs = {
+          overlays = [
+            overlays.default
+          ];
+          hostPlatform = system;
+        };
 
         users.users.example = {
           isNormalUser = true;
@@ -22,6 +29,8 @@ let
           unstable = false;
           extensions.datalad-container.enable = true;
         };
+
+        services.forgejo.package = pkgs.forgejo-aneksajo;
       }
     ];
   };

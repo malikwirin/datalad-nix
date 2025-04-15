@@ -27,7 +27,7 @@ let
 
   module-tests = import ./test-modules.nix {
     inherit nixpkgs stateVersion home-manager system;
-    modules = self.modules;
+    inherit (self) modules overlays;
   };
 in
 {

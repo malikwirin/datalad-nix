@@ -21,7 +21,7 @@
     rec {
       nixosConfigurations = import ./nixosConfigurations.nix {
         inherit nixpkgs stateVersion;
-        inherit (datalad-nix) modules;
+        inherit (datalad-nix) modules overlays;
       };
 
       homeConfigurations = import ./homeConfigurations.nix {
