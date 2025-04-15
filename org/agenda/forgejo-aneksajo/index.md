@@ -1,0 +1,3 @@
+- add aneksajo specific testing (https://codeberg.org/forgejo-aneksajo/forgejo-aneksajo/wiki#enable-git-annex-support-in-tests)
+- test replacement of package in the default gitea module in CI
+- add reference in Readme
