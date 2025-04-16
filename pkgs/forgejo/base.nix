@@ -2,6 +2,7 @@
 
 { src, version, npmDepsHash }:
 let
+  # frontend might be available through oldAttrs.passthru.frontend but npmDespsHash might be different when src is overwritten
   frontend = buildNpmPackage {
     pname = "forgejo-frontend";
     inherit src version npmDepsHash;
