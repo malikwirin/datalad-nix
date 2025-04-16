@@ -5,7 +5,7 @@ let
     inherit default lib;
     inherit (pkgs) buildNpmPackage bash git gzip openssh;
   };
-  stableBase = { rev, hash, npmDepsHash, vendorHash }: base {
+  stableBase = { rev, hash, npmDepsHash }: base {
     src = pkgs.fetchFromGitea {
       domain = "codeberg.org";
       owner = "forgejo-aneksajo";
@@ -14,7 +14,7 @@ let
     };
 
     version = rev;
-    inherit vendorHash npmDepsHash;
+    inherit npmDepsHash;
   };
 in
 {
@@ -29,7 +29,6 @@ in
       rev = "v10.0.3-git-annex0";
       hash = "sha256-FIIO8sf58j/J/RU0W2RUBjqN5dWWdUFkXaQ1dDcWxFU=";
       npmDepsHash = "sha256-EilG3wNu5153xRXiIhgQaxe3sh1TnSlMPQPUhqSh9mM=";
-      vendorHash = "sha256-b3+zxsKRylgfdW0Yiz0QryObMKdtiMCt0hB3DtAGFrQ=";
     };
   };
 }

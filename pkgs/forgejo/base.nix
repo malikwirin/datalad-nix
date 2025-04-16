@@ -1,6 +1,6 @@
 { default, lib, buildNpmPackage, bash, git, gzip, openssh }:
 
-{ src, version, vendorHash, npmDepsHash }:
+{ src, version, npmDepsHash }:
 let
   frontend = buildNpmPackage {
     pname = "forgejo-frontend";
@@ -25,7 +25,7 @@ let
 in
 {
   pname = "forgejo-aneksajo";
-  inherit src version vendorHash tags;
+  inherit src version tags;
   inherit (oldAttrs)
     subPackages
     outputs
@@ -35,6 +35,7 @@ in
     postPatch
     preCheck
     checkFlags
+    vendorHash
     # seems to be missing overrideModAttrs
     ;
 
