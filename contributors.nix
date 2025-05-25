@@ -1,6 +1,0 @@
-{ nixMaintainers }:
-
-{
-  inherit (nixMaintainers)
-    malik;
-}

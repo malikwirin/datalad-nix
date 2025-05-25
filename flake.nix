@@ -33,12 +33,9 @@
 
   outputs = { self, nixpkgs-unstable, flake-utils, treefmt-nix, datalad, datalad-container, nix-github-actions, home-manager }:
     let
-      contributors = import ./contributors.nix {
-        nixMaintainers = nixpkgs-unstable.lib.maintainers;
-      };
       packagesImport = { pkgs, lib }:
         import ./pkgs/default.nix {
-          inherit pkgs lib contributors;
+          inherit pkgs lib;
           sources = {
             inherit datalad datalad-container;
           };
@@ -50,7 +47,7 @@
         default = datalad;
 
         datalad = import ./overlay/default.nix {
-          inherit packagesImport contributors;
+          inherit packagesImport;
         };
       };
 

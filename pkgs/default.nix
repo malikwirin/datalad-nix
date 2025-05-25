@@ -1,4 +1,4 @@
-{ pkgs, lib, sources, flake, contributors }:
+{ pkgs, lib, sources, flake }:
 
 let
   inherit (pkgs) fetchFromGitHub git python3;
@@ -50,6 +50,6 @@ rec {
     };
 
   utils = import ./utils.nix {
-    inherit lib pkgs flake contributors;
+    inherit lib pkgs flake;
   };
 }
