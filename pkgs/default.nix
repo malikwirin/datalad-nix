@@ -6,19 +6,19 @@ in
 rec {
   default = pkgs.datalad;
 
-  dataladGit = default.overrideAttrs (oldAttrs: {
+  dataladGit = default.overrideAttrs (oldAttrs: 
+  let
     version = "git";
+  in {
+    inherit version;
 
     src = sources.datalad;
 
     propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ pkgs.git-annex ];
 
-    disabledTests = [
-      # Version checks
-      "test_setup"
-      "test_external_versions_basic"
-      "test__version__"
-    ] ++ (oldAttrs.disabledTests or [ ]);
+    postPatch = ''
+      sed -i '/def get_versions/,/^$/c\def get_versions():\n    return {"version": "${version}", "full-revisionid": None, "dirty": None, "error": None, "date": None}\n' datalad/_version.py
+   '';
 
     meta = oldAttrs.meta // {
       homepage = "https://github.com/datalad/datalad";
