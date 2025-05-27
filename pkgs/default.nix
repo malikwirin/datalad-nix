@@ -8,7 +8,7 @@ rec {
 
   dataladGit = default.overrideAttrs (oldAttrs:
     let
-      version = "1.2.0.dev0";
+      version = "1.2.1.dev0+g${builtins.substring 0 7 sources.datalad.rev}";
     in
     {
       inherit version;
