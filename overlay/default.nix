@@ -4,6 +4,7 @@ final: prev:
 let
   packages = packagesImport {
     pkgs = final;
+    lib = final.lib;
   };
 in
 {
