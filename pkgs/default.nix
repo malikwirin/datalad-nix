@@ -15,6 +15,10 @@ rec {
 
       src = sources.datalad;
 
+      patches = [
+        ./patches/fix-ls-path.patch
+      ] ++ (oldAttrs.patches or [ ]);
+
       propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ pkgs.git-annex ];
 
       postPatch = ''

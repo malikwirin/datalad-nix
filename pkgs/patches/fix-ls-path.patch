@@ -1,0 +1,22 @@
+From d8eac5682d794b2460d732a2c7637acefecfeb82 Mon Sep 17 00:00:00 2001
+From: Malik <abdelmalik.najhi@stud.hs-kempten.de>
+Date: Tue, 27 May 2025 16:22:32 +0200
+Subject: [PATCH] rely on path for ls location
+
+---
+ datalad/distribution/create_sibling.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/datalad/distribution/create_sibling.py b/datalad/distribution/create_sibling.py
+index f31028d8e8..1fd7694f45 100644
+--- a/datalad/distribution/create_sibling.py
++++ b/datalad/distribution/create_sibling.py
+@@ -396,7 +396,7 @@ def _ls_remote_path(ssh, path):
+         # sh_quote could decide to quote Windows-style
+         # C.UTF-8 locale as opposed to C locale handles special characters (umlauts etc.)
+         # ls falls back to C locale if LC_ALL is set to unknown locale, so this should be safe.
+-        ls_cmd = "LC_ALL=C.UTF-8; export LC_ALL; /bin/ls -A1 {}".format(shlex.quote(path))
++        ls_cmd = "LC_ALL=C.UTF-8; export LC_ALL; ls -A1 {}".format(shlex.quote(path))
+         # TODO: Using sh_quote here is also flawed as it checks whether the
+         # *local* machine is Windows. Doesn't help if the remote we're ssh'ing in is Windows.
+         ssh_cmd = "sh -c {}".format(sh_quote(ls_cmd))
