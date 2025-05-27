@@ -13,6 +13,13 @@ rec {
 
     propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ pkgs.git-annex ];
 
+    disabledTests = [
+      # Version checks
+      "test_setup"
+      "test_external_versions_basic"
+      "test__version__"
+    ] ++ (oldAttrs.disabledTests or [ ]);
+
     meta = oldAttrs.meta // {
       homepage = "https://github.com/datalad/datalad";
       maintainers = lib.unique (
