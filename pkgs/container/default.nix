@@ -1,15 +1,16 @@
 { fetchgit, lib, python3, git, datalad, containerSrc, dataladGit }:
 
 let
-  srcBase = version: hash: 
-  let
-    owner = "datalad";
-    repo = "datalad-container";
-  in fetchgit {
-    url = "https://github.com/${owner}/${repo}.git";
-    rev = version;
-    hash = hash;
-  };
+  srcBase = version: hash:
+    let
+      owner = "datalad";
+      repo = "datalad-container";
+    in
+    fetchgit {
+      url = "https://github.com/${owner}/${repo}.git";
+      rev = version;
+      hash = hash;
+    };
   base = version: src: dlImpl: changelog: import ./base.nix {
     inherit version src changelog lib git;
     buildPythonApplication = python3.pkgs.buildPythonApplication;
