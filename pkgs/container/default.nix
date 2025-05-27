@@ -1,9 +1,12 @@
-{ fetchFromGitHub, lib, python3, git, datalad, containerSrc, dataladGit }:
+{ fetchgit, lib, python3, git, datalad, containerSrc, dataladGit }:
 
 let
-  srcBase = version: hash: fetchFromGitHub {
+  srcBase = version: hash: 
+  let
     owner = "datalad";
     repo = "datalad-container";
+  in fetchgit {
+    url = "https://github.com/${owner}/${repo}.git";
     rev = version;
     hash = hash;
   };

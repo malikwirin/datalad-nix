@@ -1,7 +1,7 @@
 { pkgs, lib, sources, flake }:
 
 let
-  inherit (pkgs) fetchFromGitHub git python3;
+  inherit (pkgs) fetchgit git python3;
 in
 rec {
   default = pkgs.datalad;
@@ -40,7 +40,7 @@ rec {
     });
 
   container = import ./container {
-    inherit fetchFromGitHub lib python3 git dataladGit;
+    inherit fetchgit lib python3 git dataladGit;
     datalad = default;
     containerSrc = sources.datalad-container;
   };

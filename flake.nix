@@ -16,7 +16,7 @@
     };
 
     datalad = {
-      url = "github:datalad/datalad";
+      url = "github:datalad/datalad"; # TODO: check if `git+` can provide the actual version variable
       flake = false;
     };
 
