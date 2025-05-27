@@ -8,7 +8,7 @@ rec {
 
   dataladGit = default.overrideAttrs (oldAttrs:
     let
-      version = "git";
+      version = "1.2.0.dev0";
     in
     {
       inherit version;
