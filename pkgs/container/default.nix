@@ -29,7 +29,7 @@ rec {
   v1_2_5 =
     let
       version = "1.2.5";
-      hash = "sha256-ueqVyCSnEkJBb21X+EM2OC6fJ1/t0YXcaES0CT4/npI=";
+      hash = "sha256-ZnuLmL0NCtDv5v5plq988al2qQowTn5P/4HDkvZ4pFc=";
     in
     base version (srcBase version hash) datalad "https://github.com/datalad/datalad-container/blob/${version}/CHANGELOG.md";
 
