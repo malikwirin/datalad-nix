@@ -21,6 +21,10 @@ rec {
         sed -i '/def get_versions/,/^$/c\def get_versions():\n    return {"version": "${version}", "full-revisionid": None, "dirty": None, "error": None, "date": None}\n' datalad/_version.py
       '';
 
+      disabledTests = [
+        "test__version__"
+      ] ++ (oldAttrs.disabledTests or [ ]);
+
       meta = oldAttrs.meta // {
         homepage = "https://github.com/datalad/datalad";
         maintainers = lib.unique (
