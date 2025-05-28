@@ -7,7 +7,7 @@ rec {
   default = pkgs.datalad;
 
   dataladGit = default.overrideAttrs (oldAttrs:
-    let
+    let # TODO: check if version still needs to be set after change in flake input
       version = "1.2.1.dev0+g${builtins.substring 0 7 sources.datalad.rev}";
     in
     {
