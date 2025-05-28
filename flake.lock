@@ -5,15 +5,15 @@
       "locked": {
         "lastModified": 1748279030,
         "narHash": "sha256-XaTx84sZih6cuZ9cg4ziY9N8UBrzRnPjMbTpAJL3Dn8=",
-        "owner": "datalad",
-        "repo": "datalad",
+        "ref": "refs/heads/maint",
         "rev": "2e48124b04fed336acdfb43503e3c8afc05da19f",
-        "type": "github"
+        "revCount": 17378,
+        "type": "git",
+        "url": "https://github.com/datalad/datalad.git"
       },
       "original": {
-        "owner": "datalad",
-        "repo": "datalad",
-        "type": "github"
+        "type": "git",
+        "url": "https://github.com/datalad/datalad.git"
       }
     },
     "datalad-container": {
@@ -57,11 +57,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748227609,
-        "narHash": "sha256-SaSdslyo6UGDpPUlmrPA4dWOEuxCy2ihRN9K6BnqYsA=",
+        "lastModified": 1748391243,
+        "narHash": "sha256-7sCuihzsTRZemtbTXaFUoGJUfuQErhKEcL9v7HKIo1k=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d23d20f55d49d8818ac1f1b2783671e8a6725022",
+        "rev": "f5b12be834874f7661db4ced969a621ab2d57971",
         "type": "github"
       },
       "original": {
@@ -92,11 +92,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1748217807,
-        "narHash": "sha256-P3u2PXxMlo49PutQLnk2PhI/imC69hFl1yY4aT5Nax8=",
+        "lastModified": 1748344075,
+        "narHash": "sha256-PsZAY3H0e/PBoDVn4fLwGEmeSwESj7SZPZ6CMfgbWFU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3108eaa516ae22c2360928589731a4f1581526ef",
+        "rev": "e0042dedfbc9134ef973f64e5c7f56a38cc5cc97",
         "type": "github"
       },
       "original": {
