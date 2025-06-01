@@ -16,7 +16,7 @@ rec {
       src = sources.datalad;
 
       patches = [
-        ./patches/fix-ls-path.patch
+        ./patches/fix-ls-path.patch # TODO: use patch from PR https://github.com/datalad/datalad/pull/7730 instead
       ] ++ (oldAttrs.patches or [ ]);
 
       propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ pkgs.git-annex ];
